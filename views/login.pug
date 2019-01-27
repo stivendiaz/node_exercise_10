@@ -1,0 +1,11 @@
+extends layout.pug
+block content
+  form(action="/login" method="POST")
+    .form-group
+      label(for='email') Email:
+      input#email.form-control(type='email', placeholder='Enter email', name='email')
+    .form-group
+      label(for='pwd') Contraseña:
+      input#password.form-control(type='password', placeholder='Enter password', name='password')
+    .form-group
+      button.btn.btn-primary(type='submit') Submit

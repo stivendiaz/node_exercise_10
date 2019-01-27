@@ -1,0 +1,17 @@
+extends layout.pug
+block content
+    a(href="/signup") Registrarse
+    
+    table.table.table-bordered
+        thead
+            tr
+                th Name
+                th Email
+        
+        tbody
+            each val in visitors
+                tr
+                    td #{val.name}
+                    td #{val.email}
+
+            
