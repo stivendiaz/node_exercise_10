@@ -9,4 +9,10 @@ html(lang='es')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js')
   body.container
+    if(message)
+      .alert.alert-danger.alert-dismissible
+        button.close(type='button', data-dismiss='alert') ×
+        strong Danger!
+        |  #{message}
+
     block content

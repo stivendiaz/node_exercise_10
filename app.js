@@ -2,14 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 const pug = require('pug');
-const session = require('express-session');
 
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-
-app.use(session({secret: "123asdfghjkl"}));
 
 app.set('view engine', 'pug')
 
@@ -31,15 +28,19 @@ const VisitorSchema = new mongoose.Schema({
 });
 const Visitor = mongoose.model("Visitor", VisitorSchema);
 
-app.get("/", async (req, res) => {
+
+
+app.get("/index", async (req, res) => {
 
     await Visitor.find({}, async function (err, data) {
         res.render('index', {
             visitors: data
         });
     });
+});
 
-
+app.get("/", async (req, res) => {
+    res.render('login');
 });
 
 app.get("/register", async (req, res) => {
@@ -50,11 +51,10 @@ app.get("/register", async (req, res) => {
 app.post("/register", async (req, res) => {
 
     await Visitor.findOne({
-        email: req.query.email
+        email: req.body.email
     }, async function (err, data) {
         if (data) {
-
-            // logica de que ya existe
+            res.render('signup', { message: 'This account already exists'});
         } else {
             const visitor = new Visitor({
                 name: req.body.name,
@@ -63,11 +63,8 @@ app.post("/register", async (req, res) => {
             });
             await visitor.save()
         }
-        res.redirect('/');
+        res.redirect('/index');
     });
-
-    
-
 });
 
 app.get("/login", async (req, res) => {
@@ -78,21 +75,16 @@ app.get("/login", async (req, res) => {
 app.post("/login", async (req, res) => {
 
     await Visitor.findOne({
-        email: req.query.email,
-        password: req.query.password
+        email: req.body.email,
+        password: req.body.password
     }, async function (err, data) {
+        console.log(data);
         if (data) {
-            if(data.password == req.query.password){
-
-            }else{
-                res.send();
-            }
+            res.redirect('/index');
+        }else{
+            res.render('login', { message: 'Wrong email or password. Try again!'})
         }
-        res.redirect('/');
     });
-
-    
-
 });
 
 

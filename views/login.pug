@@ -1,5 +1,6 @@
 extends layout.pug
 block content
+ 
   form(action="/login" method="POST")
     .form-group
       label(for='email') Email:
@@ -8,4 +9,5 @@ block content
       label(for='pwd') Contraseña:
       input#password.form-control(type='password', placeholder='Enter password', name='password')
     .form-group
+      a(href="/register") Registrarse
       button.btn.btn-primary(type='submit') Submit
