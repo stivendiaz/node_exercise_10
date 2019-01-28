@@ -55,7 +55,7 @@ app.get("/", async (req, res) => {
     if (req.session._id) {
         res.render('index');
     } else {
-        res.render('login');
+        res.redirect('login');
     }
 });
 
